@@ -89,9 +89,6 @@ def reduce_puzzle(values):
     solved_values = [box for box in values.keys() if len(values[box]) == 1]
     stalled = False
     while not stalled:
-        print("-------------------")
-        display(values)
-
         # Check how many boxes have a determined value
         solved_values_before = len([box for box in values.keys() if len(values[box]) == 1])
         # Use the Eliminate Strategy
@@ -115,9 +112,8 @@ def solve(grid):
 def search(values):
     "Using depth-first search and propagation, create a search tree and solve the sudoku."
     # First, reduce the puzzle using the previous function
-    display(values)
+    #display(values)
     values = reduce_puzzle(values)
-    print(values)
     if values is False:
         return False ## Failed earlier
     if all(len(values[s]) == 1 for s in boxes): 
@@ -141,18 +137,20 @@ cols = '123456789'
 boxes = cross(rows, cols)
 row_units = [cross(r, cols) for r in rows]
 column_units = [cross(rows, c) for c in cols]
+diag_units = [ [ rows[i]+cols[i] for i in range(9) ],
+                [rows[i]+cols[-i-1] for i in range(9) ] ]
 square_units = [cross(rs, cs) for rs in ('ABC','DEF','GHI') for cs in ('123','456','789')]
+print(diag_units)
 
-unitlist = row_units + column_units + square_units
+unitlist = row_units + column_units + square_units + diag_units
 units = dict((s, [u for u in unitlist if s in u]) for s in boxes)
 peers = dict((s, set(sum(units[s],[]))-set([s])) for s in boxes)
 
 if __name__ == '__main__':
-    #diag_sudoku_grid = '2.............62....1....7...6..8...3...9...7...6..4...4....8....52.............3'
-    diag_sudoku_grid = '..3.2.6..9..3.5..1..18.64....81.29..7.......8..67.82....26.95..8..2.3..9..5.1.3..'
+    diag_sudoku_grid = '2.............62....1....7...6..8...3...9...7...6..4...4....8....52.............3'
+    #diag_sudoku_grid = '..3.2.6..9..3.5..1..18.64....81.29..7.......8..67.82....26.95..8..2.3..9..5.1.3..'
     #display(solve(grid_values(diag_sudoku_grid)))
     res = search(grid_values(diag_sudoku_grid))
-    print(res)
     display(res)
 
     try:
