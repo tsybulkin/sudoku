@@ -57,13 +57,26 @@ def display(values):
                       for c in cols))
         if r in 'CF': print(line)
     return
-    
+
 
 def eliminate(values):
-    pass
+    for box in values:
+        if len(values[box]) == 1:
+            digit = values[box]
+            for peer in peers[box]:
+                values[peer] = values[peer].replace(digit,'')
+    return values
+
 
 def only_choice(values):
-    pass
+    for unit in unitlist:
+        for box in unit:
+            for digit in values[box]:
+                if not any( digit in values[b] 
+                                for b in unit if b != box ):
+                    values[box] = digit
+    return values
+
 
 def reduce_puzzle(values):
     pass
