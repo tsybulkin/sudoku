@@ -3,11 +3,18 @@
 
 # Question 1 (Naked Twins)
 Q: How do we use constraint propagation to solve the naked twins problem?  
-A: *Student should provide answer here*
+A: For each unit (it can be a row, a column or a square), we need to find
+a pair of similar duplets. For example, we found '27' and '27'. Then for all other
+boxes of that unit exluding twins we need to eliminate '2' and '7' as these values are fixed for naked twins. Then, we continue finding the next twins until either we process all
+units or alternatively until no twins can be found. Thus, we may obtain different boards
+at the end.
+
 
 # Question 2 (Diagonal Sudoku)
 Q: How do we use constraint propagation to solve the diagonal sudoku problem?  
-A: *Student should provide answer here*
+A: All we neeed to do is to add two extra units for both diagonals to the list of all units.
+The algorithm of finding the solution remains the same.
+
 
 ### Install
 
